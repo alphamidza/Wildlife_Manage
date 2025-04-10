@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoJSON Map Viewer</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        #map-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        #map {
+            flex-grow: 1;
+            width: 100%;
+        }
+        
+        #controls {
+            padding: 10px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        #layer-selector {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            font-size: 16px;
+        }
+        
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, sans-serif;
+            background: white;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+        
+        .legend {
+            line-height: 18px;
+            color: #555;
+        }
+        
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div id="map-container">
+        <div id="controls">
+            <label for="layer-selector">Select Layer:</label>
+            <select id="layer-selector">
+                <option value="">-- Choose a GeoJSON Layer --</option>
+                <!-- Options will be added dynamically -->
+            </select>
+            <div id="layer-info" class="info"></div>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([39.8283, -98.5795], 4); // Center on USA
+        
+        // Add base tile layer (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Object to store our GeoJSON layers
+        const geoJsonLayers = {};
+        let currentLayer = null;
+        
+        // Configuration for different GeoJSON layers
+        const layerConfigs = [
+            {
+                name: "Hwange National Park",
+                url: "https://raw.githubusercontent.com/alphamidza/JSON_files_For_Zimaps/refs/heads/main/Hwange.geojson",
+                color: "#ff7800",
+                fillOpacity: 0.2,
+                weight: 2,
+                infoTemplate: "<h4>{name}</h4>"
+            },
+            {
+                name: "Mana Pools National Park",
+                url: "https://raw.githubusercontent.com/alphamidza/JSON_files_For_Zimaps/refs/heads/main/ManaPools.geojson",
+                color: "#ff7800",
+                fillOpacity: 0.2,
+                weight: 2,
+                infoTemplate: "<h4>{name}</h4>"
+            },
+            {
+                name: "Gonarezhou National Park",
+                url: "https://raw.githubusercontent.com/alphamidza/JSON_files_For_Zimaps/refs/heads/main/Gonarezhou.geojson",
+                color: "#ff7800",
+                fillOpacity: 0.2,
+                weight: 2,
+                infoTemplate: "<h4>{name}</h4>"
+            },
+            {
+                name: "Matopos National Park",
+                url: "https://raw.githubusercontent.com/alphamidza/JSON_files_For_Zimaps/refs/heads/main/Matopos.geojson",
+                color: "#ff0000",
+                radius: 5,
+                fillOpacity: 0.7,
+                weight: 1,
+                infoTemplate: "<h4>Magnitude {mag}</h4>Location: {place}<br>Depth: {depth} km"
+            },
+            {
+                name: "Chizarira National Park",
+                url: "https://raw.githubusercontent.com/alphamidza/JSON_files_For_Zimaps/refs/heads/main/Chizarira.geojson",
+                color: "#ff0000",
+                radius: 5,
+                fillOpacity: 0.7,
+                weight: 1,
+                infoTemplate: "<h4>Magnitude {mag}</h4>Location: {place}<br>Depth: {depth} km"
+            },
+            {
+                name: "Zambezi National Park",
+                url: "https://raw.githubusercontent.com/alphamidza/JSON_files_For_Zimaps/refs/heads/main/Zambezi.geojson",
+                color: "#008000",
+                fillOpacity: 0.5,
+                weight: 2,
+                infoTemplate: "<h4>{NAME}</h4><p>{DESCRIPTIO}</p>"
+            }
+            // Add more layers as needed
+        ];
+        
+        // Populate the dropdown selector
+        const layerSelector = document.getElementById('layer-selector');
+        layerConfigs.forEach((config, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = config.name;
+            layerSelector.appendChild(option);
+        });
+        
+        // Function to load and display GeoJSON
+        function loadGeoJsonLayer(configIndex) {
+            // Remove current layer if it exists
+            if (currentLayer) {
+                map.removeLayer(currentLayer);
+                currentLayer = null;
+            }
+            
+            // Clear info panel
+            document.getElementById('layer-info').innerHTML = '';
+            
+            // If no layer selected, stop here
+            if (configIndex === '') return;
+            
+            const config = layerConfigs[configIndex];
+            
+            // Show loading message
+            document.getElementById('layer-info').innerHTML = `<p>Loading ${config.name}...</p>`;
+            
+            // Fetch the GeoJSON data
+            fetch(config.url)
+                .then(response => response.json())
+                .then(data => {
+                    // Create a Leaflet GeoJSON layer
+                    const geoJsonLayer = L.geoJSON(data, {
+                        pointToLayer: (feature, latlng) => {
+                            // For point features, create circle markers
+                            return L.circleMarker(latlng, {
+                                radius: config.radius || 6,
+                                fillColor: config.color || "#3388ff",
+                                color: "#000",
+                                weight: config.weight || 1,
+                                opacity: 1,
+                                fillOpacity: config.fillOpacity || 0.2
+                            });
+                        },
+                        style: (feature) => {
+                            // For polygon/line features
+                            return {
+                                color: config.color || "#3388ff",
+                                weight: config.weight || 2,
+                                opacity: 1,
+                                fillOpacity: config.fillOpacity || 0.2,
+                                fillColor: config.color || "#3388ff"
+                            };
+                        },
+                        onEachFeature: (feature, layer) => {
+                            // Add popup with feature information
+                            if (feature.properties) {
+                                let content = config.infoTemplate;
+                                
+                                // Replace template placeholders with actual values
+                                for (const prop in feature.properties) {
+                                    content = content.replace(new RegExp(`{${prop}}`, 'g'), feature.properties[prop]);
+                                }
+                                
+                                layer.bindPopup(content);
+                                
+                                // Add click event to show info in the panel
+                                layer.on('click', () => {
+                                    document.getElementById('layer-info').innerHTML = content;
+                                });
+                            }
+                        }
+                    });
+                    
+                    // Add the layer to the map and store reference
+                    geoJsonLayer.addTo(map);
+                    currentLayer = geoJsonLayer;
+                    
+                    // Fit map to layer bounds
+                    map.fitBounds(geoJsonLayer.getBounds());
+                    
+                    // Update info panel
+                    document.getElementById('layer-info').innerHTML = 
+                        `<h4>${config.name}</h4><p>${data.features.length} features loaded</p>`;
+                })
+                .catch(error => {
+                    console.error('Error loading GeoJSON:', error);
+                    document.getElementById('layer-info').innerHTML = 
+                        `<p>Error loading ${config.name}: ${error.message}</p>`;
+                });
+        }
+        
+        // Event listener for dropdown changes
+        layerSelector.addEventListener('change', (e) => {
+            loadGeoJsonLayer(e.target.value);
+        });
+        
+        // Optional: Load first layer by default
+        // if (layerConfigs.length > 0) {
+        //     layerSelector.value = 0;
+        //     loadGeoJsonLayer(0);
+        // }
+    </script>
+</body>
+</html>

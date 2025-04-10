@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matopos National Park Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a6d3f;
+            --secondary: #f7b733;
+            --dark: #1a2a3a;
+            --light: #f5f7fa;
+            --accent: #e74c3c;
+            --text: #333;
+            --text-light: #666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), #0d4b2a);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Park Details Section */
+        .park-details-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .park-details-section h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .park-details-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .park-details-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .park-info {
+            padding: 20px;
+        }
+        
+        .park-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .park-location i {
+            color: var(--accent);
+        }
+        
+        .detailed-description h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin: 25px 0 15px;
+            font-size: 1.8rem;
+        }
+        
+        .detailed-description h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin: 20px 0 10px;
+            font-size: 1.4rem;
+        }
+        
+        .detailed-description p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .official-website {
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .official-website h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: 2px solid var(--secondary);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--secondary);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-col p {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .park-details-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .park-details-content img {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                gap: 15px;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .park-details-section h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .park-details-section {
+                padding: 50px 0;
+            }
+            
+            .detailed-description h2 {
+                font-size: 1.5rem;
+            }
+            
+            .detailed-description h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/UZ_new_logo_final.jpg/800px-UZ_new_logo_final.jpg" alt="Zimbabwe Wildlife Logo">
+                <span class="logo-text">ZimWildlife</span>
+            </div>
+            <nav>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#parks">National Parks</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#stats">Statistics</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Park Details Section -->
+    <section class="park-details-section">
+        <div class="container">
+            <h1>Matopos National Park</h1>
+            
+            <div class="park-details-content">
+                <img src="https://www.expertafrica.com/images/animal/f1a768b967304e3ca7fab80feebc874b.jpg" alt="Matopos National Park">
+                
+                <div class="park-info">
+                    <div class="park-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Matabeleland South, Zimbabwe</span>
+                    </div>
+                    
+                    <div class="detailed-description">
+                        <h2>About Matopos National Park</h2>
+                        <p>Matopos National Park, also known as Matobo National Park, is a UNESCO World Heritage Site located in southern Zimbabwe. The park covers 424 square kilometers of unique granite kopjes (rock formations) and wooded valleys. The name "Matobo" means "bald heads" in the local Ndebele language, referring to the distinctive rounded granite hills.</p>
+                        
+                        <h3>Wildlife</h3>
+                        <p>The park is home to approximately 300 rhinos (both black and white), making it one of the best places in Africa to see these endangered species. Other wildlife includes leopards, sable antelope, and over 175 bird species. The park's rhino population is particularly significant, with successful conservation programs that allow visitors to track rhinos on foot with experienced guides.</p>
+                        
+                        <h3>Geological Features</h3>
+                        <p>Matopos is famous for its dramatic balancing rock formations created by millions of years of erosion. The park contains some of the most spectacular granite scenery in the world, with whaleback domes and castle kopjes. These formations have created numerous caves that hold significant archaeological and historical importance.</p>
+                        
+                        <h3>Cultural Significance</h3>
+                        <p>The park contains over 3,000 registered rock art sites, with some paintings dating back 13,000 years. These were created by the San people and are among the best preserved in southern Africa. The park is also the burial place of Cecil John Rhodes at World's View, and has significant Ndebele cultural heritage.</p>
+                        
+                        <h3>Conservation</h3>
+                        <p>Matopos is a stronghold for rhino conservation in Zimbabwe, with intensive anti-poaching efforts. The park's varied habitats support diverse flora including over 200 tree species and numerous aloes. The Zimbabwean government and private organizations work together to protect this unique ecosystem.</p>
+                        
+                        <h3>Tourism</h3>
+                        <p>Visitors can enjoy rhino tracking on foot, game drives, and tours of the rock art sites. The park offers stunning viewpoints, particularly at World's View, and has several lodges and campsites. The best time to visit is during the dry season (May to October) when wildlife viewing is at its best.</p>
+                    </div>
+                    
+                    <div class="official-website">
+                        <h3>Official Website</h3>
+                        <a href="https://www.zimparks.org.zw/our-parks/matobo-national-park/" target="_blank" class="btn btn-primary">
+                            Visit Official Park Website <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    
+                    <a href="index.html#parks" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to All Parks
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ZimWildlife</h3>
+                    <p>Comprehensive wildlife population management system for Zimbabwe's national parks, supporting conservation efforts through technology and community engagement.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#parks">National Parks</a></li>
+                        <li><a href="form.html">Record Data</a></li>
+                        <li><a href="map.html">Interactive Map</a></li>
+                        <li><a href="index.html#stats">Statistics</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>National Parks</h3>
+                    <ul class="footer-links">
+                        <li><a href="hwange-details.html">Hwange National Park</a></li>
+                        <li><a href="mana-pools-details.html">Mana Pools National Park</a></li>
+                        <li><a href="gonarezhou-details.html">Gonarezhou National Park</a></li>
+                        <li><a href="matopos-details.html">Matopos National Park</a></li>
+                        <li><a href="zambezi-details.html">Zambezi National Park</a></li>
+                        <li><a href="chizarira-details.html">Chizarira National Park</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 630 Churchill Drive, Mount Pleasant, Harare, Zimbabwe</p>
+                    <p><i class="fas fa-phone"></i> +263 786 147 884</p>
+                    <p><i class="fas fa-envelope"></i> milton.mbira@student.uz.ac.zw</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Zimbabwe Wildlife Management Authority. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    navMenu.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

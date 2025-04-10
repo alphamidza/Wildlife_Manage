@@ -1,0 +1,275 @@
+/* Map Page Styles */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.map-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.map-header .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.map-header .logo i {
+    font-size: 1.5rem;
+}
+
+.map-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 0.3rem 0.6rem;
+}
+
+.search-box input {
+    border: none;
+    background: transparent;
+    padding: 0.3rem;
+    outline: none;
+    min-width: 250px;
+}
+
+.search-box button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #777;
+}
+
+.filter-btn, .back-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.filter-btn {
+    background: #2e7d32;
+    color: white;
+    border: none;
+}
+
+.filter-btn:hover {
+    background: #1b5e20;
+}
+
+.back-btn {
+    background: transparent;
+    border: 1px solid #2e7d32;
+    color: #2e7d32;
+}
+
+.back-btn:hover {
+    background: rgba(46, 125, 50, 0.1);
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    background-color: white;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar-tabs button {
+    flex: 1;
+    padding: 0.8rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #777;
+    transition: all 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.sidebar-tabs button.active {
+    color: #2e7d32;
+    border-bottom-color: #2e7d32;
+}
+
+.sidebar-tabs button:hover {
+    background-color: #f9f9f9;
+}
+
+.sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content h3 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #263238;
+}
+
+.tab-content input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.layer-options, .basemap-options {
+    margin-bottom: 1.5rem;
+}
+
+.layer-options label, .basemap-options label {
+    display: block;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.layer-options label:hover, .basemap-options label:hover {
+    background-color: #f5f5f5;
+}
+
+.species-list, .project-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Map Styles */
+#map {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+}
+
+/* Legend Styles */
+.map-legend {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.map-legend h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.color-box {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+}
+
+.mammal {
+    background-color: #e53935;
+}
+
+.bird {
+    background-color: #3949ab;
+}
+
+.reptile {
+    background-color: #43a047;
+}
+
+.amphibian {
+    background-color: #fb8c00;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .map-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+    
+    .map-controls {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .search-box {
+        flex: 1;
+        min-width: 100%;
+    }
+    
+    .sidebar {
+        width: 250px;
+    }
+}

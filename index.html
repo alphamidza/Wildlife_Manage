@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zimbabwe Wildlife Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a6d3f;
+            --secondary: #f7b733;
+            --dark: #1a2a3a;
+            --light: #f5f7fa;
+            --accent: #e74c3c;
+            --text: #333;
+            --text-light: #666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), #0d4b2a);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: 2px solid var(--secondary);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--secondary);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: white;
+            color: var(--dark);
+        }
+        
+        /* Parks Section */
+        .parks-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .parks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .park-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .park-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .park-image {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .park-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .park-card:hover .park-image img {
+            transform: scale(1.1);
+        }
+        
+        .park-info {
+            padding: 25px;
+        }
+        
+        .park-info h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .park-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .park-location i {
+            color: var(--accent);
+        }
+        
+        .park-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .park-description {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .park-link {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .park-link:hover {
+            color: var(--secondary);
+        }
+        
+        .park-link i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .park-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary), #0d4b2a);
+            color: white;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .stat-box {
+            padding: 30px;
+        }
+        
+        .stat-box i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .stat-box .number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .stat-box .label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-col p {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                gap: 15px;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .parks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                height: 70vh;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .stat-box .number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/UZ_new_logo_final.jpg/800px-UZ_new_logo_final.jpg" alt="Zimbabwe Wildlife Logo">
+                <span class="logo-text">ZimWildlife</span>
+            </div>
+            <nav>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="nav-menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#parks">National Parks</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#stats">Statistics</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Zimbabwe Wildlife Population Management</h1>
+            <p>Comprehensive monitoring and conservation of wildlife across Zimbabwe's premier national parks to ensure sustainable ecosystems and biodiversity preservation.</p>
+            <div class="cta-buttons">
+                <a href="form.html" class="btn btn-primary"><i class="fas fa-pencil-alt"></i> Record Data</a>
+                <a href="Map.html" class="btn btn-secondary"><i class="fas fa-map-marked-alt"></i> Explore Map</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parks Section -->
+   <!-- Parks Section -->
+<section id="parks" class="parks-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Zimbabwe's National Parks</h2>
+            <p>Explore the diverse wildlife ecosystems across Zimbabwe's protected areas and monitor population trends.</p>
+        </div>
+        
+        <div class="parks-grid">
+            <!-- Hwange National Park - Elephants -->
+            <div class="park-card">
+                <div class="park-image">
+                    <img src="https://static.independent.co.uk/2022/03/31/10/Farayi%20-%20elephants.png?quality=75&width=1250&crop=3%3A2%2Csmart&auto=webp">
+                </div>
+                <div class="park-info">
+                    <h3>Hwange National Park</h3>
+                    <div class="park-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Matabeleland North, Zimbabwe</span>
+                    </div>
+                    <div class="park-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">45,000</div>
+                            <div class="stat-label">Elephants</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">107</div>
+                            <div class="stat-label">Species</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">14,650</div>
+                            <div class="stat-label">km²</div>
+                        </div>
+                    </div>
+                    <p class="park-description">Zimbabwe's largest national park, home to one of Africa's largest elephant populations and over 100 mammal species including lions and wild dogs :cite[1]:cite[3].</p>
+                    <a href="hwange-details.html" class="park-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Mana Pools National Park - Buffalo -->
+            <div class="park-card">
+                <div class="park-image">
+                    <img src="https://www.expertafrica.com/images/animal/5183c6a9b8814d28beff9aceb2b6bd7e.jpg">
+                </div>
+                <div class="park-info">
+                    <h3>Mana Pools National Park</h3>
+                    <div class="park-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Mashonaland West, Zimbabwe</span>
+                    </div>
+                    <div class="park-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">12,000</div>
+                            <div class="stat-label">Buffalo</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">350</div>
+                            <div class="stat-label">Bird Species</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">2,500</div>
+                            <div class="stat-label">km²</div>
+                        </div>
+                    </div>
+                    <p class="park-description">UNESCO World Heritage Site known for its wildlife-rich floodplains and walking safari opportunities along the Zambezi River :cite[1]:cite[3].</p>
+                    <a href="mana-pools-details.html" class="park-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Gonarezhou National Park - Lions -->
+            <div class="park-card">
+                <div class="park-image">
+                    <img src="https://www.expertafrica.com/images/animal/83ee380686c84c3eb779b0245b74455b.jpg">
+                </div>
+                <div class="park-info">
+                    <h3>Gonarezhou National Park</h3>
+                    <div class="park-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Masvingo, Zimbabwe</span>
+                    </div>
+                    <div class="park-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">11,000</div>
+                            <div class="stat-label">Elephants</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">500</div>
+                            <div class="stat-label">Bird Species</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">5,053</div>
+                            <div class="stat-label">km²</div>
+                        </div>
+                    </div>
+                    <p class="park-description">"Place of Elephants" featuring dramatic sandstone cliffs and part of the Great Limpopo Transfrontier Park with growing predator populations :cite[1]:cite[3].</p>
+                    <a href="gonarezhou-details.html" class="park-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Matopos National Park - Rhinos -->
+            <div class="park-card">
+                <div class="park-image">
+                    <img src="https://www.expertafrica.com/images/animal/f1a768b967304e3ca7fab80feebc874b.jpg">
+                </div>
+                <div class="park-info">
+                    <h3>Matopos National Park</h3>
+                    <div class="park-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Matabeleland South, Zimbabwe</span>
+                    </div>
+                    <div class="park-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">300</div>
+                            <div class="stat-label">Rhinos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">175</div>
+                            <div class="stat-label">Bird Species</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">424</div>
+                            <div class="stat-label">km²</div>
+                        </div>
+                    </div>
+                    <p class="park-description">Famed for its balancing rock formations and significant population of both black and white rhinos that can be tracked on foot :cite[1]:cite[3].</p>
+                    <a href="matopos-details.html" class="park-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Zambezi National Park - Hippos -->
+            <div class="park-card">
+                <div class="park-image">
+                    <img src="https://www.expertafrica.com/images/animal/293df5b2f967426897ff576028fbeb4d.jpg">
+                </div>
+                <div class="park-info">
+                    <h3>Zambezi National Park</h3>
+                    <div class="park-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Matabeleland North, Zimbabwe</span>
+                    </div>
+                    <div class="park-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">4,000</div>
+                            <div class="stat-label">Buffalo</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">75</div>
+                            <div class="stat-label">Mammal Species</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">560</div>
+                            <div class="stat-label">km²</div>
+                        </div>
+                    </div>
+                    <p class="park-description">Stretching along the Zambezi River upstream from Victoria Falls, rich in aquatic wildlife including hippos and crocodiles :cite[1]:cite[3].</p>
+                    <a href="zambezi-details.html" class="park-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Chizarira National Park - Leopard -->
+            <div class="park-card">
+                <div class="park-card">
+                    <div class="park-image">
+                        <img src="https://www.expertafrica.com/images/animal/8b2135fe8af84eafb156fab06fada868.jpg">
+                    </div>
+                <div class="park-info">
+                    <h3>Chizarira National Park</h3>
+                    <div class="park-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Matabeleland North, Zimbabwe</span>
+                    </div>
+                    <div class="park-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">1,200</div>
+                            <div class="stat-label">Elephants</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">400</div>
+                            <div class="stat-label">Bird Species</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">1,920</div>
+                            <div class="stat-label">km²</div>
+                        </div>
+                    </div>
+                    <p class="park-description">Remote wilderness area in the Zambezi Escarpment with dramatic landscapes and diverse wildlife including leopards and elephants :cite[1]:cite[3].</p>
+                    <a href="chizarira-details.html" class="park-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Management Features</h2>
+                <p>Advanced tools and methodologies for effective wildlife population monitoring and conservation.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Population Tracking</h3>
+                    <p>Real-time monitoring of wildlife populations with trend analysis and predictive modeling for conservation planning.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Spatial Analysis</h3>
+                    <p>GIS mapping of wildlife movements, habitat use, and human-wildlife conflict hotspots for better management.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Camera Trapping</h3>
+                    <p>Automated image recognition from camera traps to identify and count individual animals across all parks.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Reporting</h3>
+                    <p>Integrated platform for local communities to report wildlife sightings and incidents in real-time.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Anti-Poaching</h3>
+                    <p>Advanced monitoring systems to detect and prevent poaching activities across protected areas.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-sun-rain"></i>
+                    </div>
+                    <h3>Climate Impact</h3>
+                    <p>Analysis of climate change effects on wildlife habitats and predictive modeling for future scenarios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Zimbabwe Wildlife At a Glance</h2>
+                <p>Key statistics from our comprehensive wildlife monitoring system</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <i class="fas fa-elephant"></i>
+                    <div class="number">84,000</div>
+                    <div class="label">Elephants</div>
+                </div>
+                
+                <div class="stat-box">
+                    <i class="fas fa-paw"></i>
+                    <div class="number">2,500</div>
+                    <div class="label">Lions</div>
+                </div>
+                
+                <div class="stat-box">
+                    <i class="fas fa-hippo"></i>
+                    <div class="number">3,200</div>
+                    <div class="label">Hippos</div>
+                </div>
+                
+                <div class="stat-box">
+                    <i class="fas fa-feather-alt"></i>
+                    <div class="number">650+</div>
+                    <div class="label">Bird Species</div>
+                </div>
+                
+                <div class="stat-box">
+                    <i class="fas fa-tree"></i>
+                    <div class="number">25,000</div>
+                    <div class="label">Sq. Km Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ZimWildlife</h3>
+                    <p>Comprehensive wildlife population management system for Zimbabwe's national parks, supporting conservation efforts through technology and community engagement.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#parks">National Parks</a></li>
+                        <li><a href="form.html">Record Data</a></li>
+                        <li><a href="map.html">Interactive Map</a></li>
+                        <li><a href="#stats">Statistics</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>National Parks</h3>
+                    <ul class="footer-links">
+                        <li><a href="hwange-details.html">Hwange National Park</a></li>
+                        <li><a href="mana-pools-details.html">Mana Pools National Park</a></li>
+                        <li><a href="gonarezhou-details.html">Gonarezhou National Park</a></li>
+                        <li><a href="matopos-details.html">Matopos National Park</a></li>
+                        <li><a href="zambezi-details.html">Zambezi National Park</a></li>
+                        <li><a href="chizarira-details.html">Chizarira National Park</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 630 Churchill Drive, Mount Pleasant, Harare, Zimbabwe</p>
+                    <p><i class="fas fa-phone"></i> +263 786 147 884</p>
+                    <p><i class="fas fa-envelope"></i> milton.mbira@student.uz.ac.zw</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Zimbabwe Wildlife Management Authority. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    navMenu.classList.remove('show');
+                }
+            });
+        });
+        
+        // Animate stats counter
+        const statBoxes = document.querySelectorAll('.stat-box .number');
+        const statsSection = document.querySelector('.stats-section');
+        
+        function animateStats() {
+            const sectionTop = statsSection.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            if (sectionTop < windowHeight - 100) {
+                statBoxes.forEach(box => {
+                    const target = parseInt(box.textContent.replace(/,/g, ''));
+                    const suffix = box.textContent.match(/\D+$/)?.[0] || '';
+                    let current = 0;
+                    const increment = target / 50;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            clearInterval(timer);
+                            current = target;
+                        }
+                        box.textContent = Math.floor(current).toLocaleString() + suffix;
+                    }, 20);
+                });
+                
+                // Remove event listener after animation
+                window.removeEventListener('scroll', animateStats);
+            }
+        }
+        
+        window.addEventListener('scroll', animateStats);
+    </script>
+</body>
+</html>
