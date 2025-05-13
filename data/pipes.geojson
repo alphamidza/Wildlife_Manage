@@ -1,0 +1,26 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "pipe_id": "P1",
+          "name": "Main Supply Line 1",
+          "material": "HDPE",
+          "diameter": 200,
+          "length": 245.7,
+          "installation_year": 2010,
+          "start_node": "N1",
+          "end_node": "V1"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [-0.09, 51.505],
+            [-0.092, 51.506],
+            [-0.095, 51.508]
+          ]
+        }
+      }
+    ]
+  }

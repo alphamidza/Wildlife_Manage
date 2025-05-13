@@ -1,0 +1,33 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "node_id": "N1",
+          "name": "Main Junction 1",
+          "node_type": "junction",
+          "elevation": 125.4,
+          "pressure_zone": "Z1"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.09, 51.505]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "node_id": "V1",
+          "name": "Isolation Valve 1",
+          "node_type": "valve",
+          "elevation": 124.8,
+          "pressure_zone": "Z1"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.095, 51.508]
+        }
+      }
+    ]
+  }
