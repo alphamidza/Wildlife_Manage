@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutare Hobhouse Pipe Network Management System</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Mutare Hobhouse Pipe Network Management System</h1>
+            <div class="user-controls">
+                <button id="login-btn">Login</button>
+                <div id="user-profile"></div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="tool-panel">
+                    <h3>Tools</h3>
+                    <button id="isolate-valves">Valve Isolation</button>
+                    <button id="shortest-path">Shortest Path</button>
+                    <button id="critical-pipes">Critical Pipes</button>
+                    <button id="add-feature">Add Feature</button>
+                    <button id="report-issue">Report Issue</button>
+                </div>
+                
+                <div class="data-panel">
+                    <h3>Network Statistics</h3>
+                    <div id="stats-container">
+                        <p>Total Pipes: <span id="pipe-count">0</span></p>
+                        <p>Total Nodes: <span id="node-count">0</span></p>
+                        <p>Average Pipe Age: <span id="avg-age">0</span> years</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="map"></div>
+            
+            <div class="details-panel">
+                <h3>Feature Details Dashboard</h3>
+                <div id="feature-details"></div>
+                <div id="analysis-results"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.polylineoffset@1.1.1/leaflet.polylineoffset.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Load data files -->
+    <script src="data/harare_nodes2_2.js"></script>
+    <script src="data/harare_pipes_1.js"></script>
+    <!-- Main application -->
+    <script src="app.js"></script>
+</body>
+</html>
